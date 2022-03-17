@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            div.tileContainer {
+                border: 1px solid black;
+                position: relative;
+                width: 800px;
+                height: 800px;
+                transform: rotateX(-60deg) rotate(-45deg);
+                top: -150px;
+                left: -50px;
+            }
+            div.tile {
+                border: 1px solid black;
+                background-color: red;
+                width: 64px;
+                height: 64px;
+                position: absolute;
+                color: white;
+            }
+            div.tile div {
+                transform: rotate(45deg);
+                width: 64px;
+                height: 64px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <span class="status">-1,-1</span>
+        <div class="tileContainer"></div>
+        <script>
+            let status = document.querySelector("span.status");
+            let container = document.querySelector("div.tileContainer");
+            let dim = 64;
+            for (var y = 0; y < 15; y++) {
+                for (var x = 0; x <  8; x++) {
+                    let tx = 400 + (x * dim);
+                    let ty = (x * dim) + (y * dim);
+                    
+                    let adj = Math.floor(y/2);
+                    tx -= adj * dim;
+                    ty -= adj * dim;
+                    
+                    let tile = document.createElement("div");
+                    tile.classList.add("tile");
+                    tile.style.left = tx + "px";
+                    tile.style.top = ty + "px";
+
+                    let inner = document.createElement("div");
+                    inner.innerText = x + ", " + y;
+                    tile.appendChild(inner);
+
+                    tile.addEventListener("mousemove", function() {
+                        status.innerText = inner.innerText;
+                    });
+                    
+                    container.appendChild(tile);
+                }
+            }
+        </script>
+    </body>
+</html>
